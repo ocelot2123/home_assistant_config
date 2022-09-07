@@ -1,1 +1,42 @@
-[]
+- id: '1662536735283'
+  alias: Vacuum
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.edwards_pixel
+    to: not_home
+  - platform: state
+    entity_id:
+    - device_tracker.lindas_iphone
+    to: not_home
+  condition: []
+  action:
+  - service: vacuum.start
+    data: {}
+    target:
+      entity_id: vacuum.vacuum
+  mode: single
+- id: '1662537236129'
+  alias: Front door unlocked notification
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - lock.front_door
+    to: unlocked
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - device_id: 49610d025fb7bbde0d30096f85a95d2f
+    domain: mobile_app
+    type: notify
+    message: Front door is unlocked!
+  - device_id: da2a54d25f82a71b18bd36465060d5f3
+    domain: mobile_app
+    type: notify
+    message: Front door is unlocked!
+  mode: single
