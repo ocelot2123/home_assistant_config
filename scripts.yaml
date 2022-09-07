@@ -1,0 +1,20 @@
+toggle_vacuum:
+  alias: Toggle Vacuum on or off"
+  sequence:
+    if:
+      - alias: If Vacuum is docked
+        condition: state
+        entity_id: vacuum.vacuum
+        state: docked
+    then:
+      - alias: Then start cleaning!
+        service: vacuum.start
+        data: {}
+        target:
+          entity_id: vacuum.vacuum
+    else:
+      - alias: Else return to dock
+        service: vacuum.return_to_base
+        data: {}
+        target:
+          entity_id: vacuum.vacuum

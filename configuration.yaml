@@ -1,21 +1,15 @@
-homeassistant:
-  name: Hem
-  latitude: !secret homeassistant_latitude
-  longitude: !secret homeassistant_longitude
-  elevation: !secret homeassistant_elevation
-  unit_system: metric
-  temperature_unit: C
-  time_zone: Europe/Stockholm
-  currency: SEK
-  packages: !include_dir_named packages
-  customize_domain:
-    automation:
-      initial_state: true
-  allowlist_external_dirs:
-    - /config
-
+# Loads default set of integrations. Do not remove.
 default_config:
 
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# https://github.com/matt8707/hass-config/blob/master/INSTALL.md
 frontend: !include themes.yaml
 template: !include sidebar.yaml
 
@@ -23,36 +17,44 @@ lovelace:
   mode: yaml
   resources:
     [
-      { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
-      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
-      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
-      { url: /hacsfiles/custom-icons/custom-icons.js,                               type: module },
-      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
-      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js,                  type: module },
-      { url: /hacsfiles/lovelace-mushroom/mushroom.js,                              type: module },
-      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
-      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
-      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
-
-      { url: '/local/marked.min.js?v=4.0.18',                                       type: module },
-      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
-      { url: '/local/fonts.css?v=2.1',                                              type: css }
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module },
+      { url: /hacsfiles/bar-card/bar-card.js, type: module },
+      { url: /hacsfiles/button-card/button-card.js, type: module },
+      { url: /hacsfiles/custom-icons/custom-icons.js, type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js, type: module },
+      {
+        url: /hacsfiles/lovelace-more-info-card/more-info-card.js,
+        type: module,
+      },
+      { url: /hacsfiles/lovelace-mushroom/mushroom.js, type: module },
+      {
+        url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,
+        type: module,
+      },
+      { url: /hacsfiles/swipe-card/swipe-card.js, type: module },
+      {
+        url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,
+        type: module,
+      },
     ]
 
-recorder:
-  db_url: !secret recorder_db_url
-  exclude:
-    entity_globs:
-      - sensor.browser_*
-
-logger:
-  default: warning
-  logs:
-    homeassistant.components.websocket_api: fatal
-    custom_components.monitor_docker.helpers: fatal
-
 sensor:
+  - platform: plex_recently_added
+    token: !secret PLEX_TOKEN
+    host: !secret SERVER_IP
+    port: !secret PLEX_PORT
+
   - platform: time_date
     display_options:
       - time
       - date
+
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret XIAOMI_VACUUM_HOST
+    token: !secret XIAOMI_VACUUM_TOKEN
+    username: !secret XIAOMI_CLOUD_USERNAME
+    password: !secret XIAOMI_CLOUD_PASSWORD
+    draw: ["all"]
+    attributes:
+      - calibration_points

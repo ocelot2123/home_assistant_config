@@ -21,6 +21,8 @@ www/Plex_Recently_Added/
 
 *.code-workspace
 home-assistant.log*
+custom-cont-init.d/
+custom-services.d/
 
 
 *.orig

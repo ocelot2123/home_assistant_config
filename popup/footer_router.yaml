@@ -1,17 +1,8 @@
-update_entities:
-  action: >
-    [[[
-      hass.callService('homeassistant', 'update_entity', {
-          entity_id: [
-            'sensor.udm_unifios'
-          ]
-      });
-    ]]]
 action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: UniFi Dream Machine
+    title: Asus RT-AX58U
     content:
       type: vertical-stack
       cards:
@@ -20,33 +11,31 @@ browser_mod:
           card_mod:
             class: content
           entities:
-
-            - entity: binary_sensor.template_udm_internet
+            - entity: binary_sensor.router_wan_status
               secondary_info: last-changed
 
-            - entity: sensor.template_udm_cpu_temp
-              name: CPU Temperatur
+            - entity: sensor.router_cpu_temperature
+              name: CPU Temperature
 
             - type: custom:bar-card
               width: 55%
               height: 2em
               decimal: 0
-              unit_of_measurement: '%'
+              unit_of_measurement: "%"
               positions:
                 icon: outside
-                indicator: 'off'
+                indicator: "off"
                 name: outside
               severity:
-                - color: '#6d2525'
+                - color: "#6d2525"
                   from: 90
                   to: 999
               entity_row: true
               entities:
-                - entity: sensor.template_udm_cpu
-                - entity: sensor.template_udm_mem
-                - entity: sensor.template_udm_disk
+                - entity: sensor.router_cpu_temperature
+                - entity: sensor.router_load_avg_15m
 
-            - entity: sensor.template_udm_uptime
+            - entity: sensor.router_uptime
 
         - type: custom:mod-card
           card_mod:
@@ -60,17 +49,9 @@ browser_mod:
             type: horizontal-stack
             cards:
               - type: custom:button-card
-                name: Nätverksenheter
-                icon: mdi:devices
-                tap_action:
-                  action: url
-                  url_path: https://192.168.1.1/network/default/clients
-                template: icon_name
-
-              - type: custom:button-card
                 name: System
                 icon: mdi:cog
                 tap_action:
                   action: url
-                  url_path: https://192.168.1.1/settings/system
+                  url_path: http://192.168.50.1
                 template: icon_name
