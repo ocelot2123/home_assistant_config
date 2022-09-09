@@ -16,7 +16,7 @@ browser_mod:
               }
           entities:
             - type: custom:mushroom-climate-card
-              entity: climate.dining_room_ac
+              entity: climate.living_room_ac
               name: Dining Room AC
               icon: mdi:home-thermometer
               hvac_modes:
@@ -34,7 +34,7 @@ browser_mod:
                   }
 
             - type: custom:mushroom-climate-card
-              entity: climate.dining_room_ac
+              entity: climate.living_room_ac
               icon_type: none
               secondary_info: none
               primary_info: none
@@ -45,7 +45,7 @@ browser_mod:
                     margin: -18px -13px -8px -4px;
 
             - type: custom:more-info-card
-              entity: climate.dining_room_ac
+              entity: climate.living_room_ac
               card_mod:
                 style:
                   # hide everything but ha-select

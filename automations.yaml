@@ -1,22 +1,3 @@
-- id: '1662536735283'
-  alias: Vacuum
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - device_tracker.edwards_pixel
-    to: not_home
-  - platform: state
-    entity_id:
-    - device_tracker.lindas_iphone
-    to: not_home
-  condition: []
-  action:
-  - service: vacuum.start
-    data: {}
-    target:
-      entity_id: vacuum.vacuum
-  mode: single
 - id: '1662537236129'
   alias: Front door unlocked notification
   description: ''
@@ -39,4 +20,40 @@
     domain: mobile_app
     type: notify
     message: Front door is unlocked!
+  mode: single
+- id: '1662546484568'
+  alias: Vacuum
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.edwards_pixel
+    to: not_home
+  - platform: state
+    entity_id:
+    - device_tracker.lindas_iphone
+    to: not_home
+  condition:
+  - condition: and
+    conditions:
+    - condition: template
+      value_template: "{% set last = state_attr('automation.vacuum',\n           \
+        \              'last_triggered') %}\n{{ last is none or\n   as_timestamp(last)|timestamp_custom('%j')|int\
+        \ !=\n   now().strftime('%j')|int }}\n"
+    - condition: state
+      entity_id: device_tracker.edwards_pixel
+      state: not_home
+    - condition: state
+      entity_id: device_tracker.lindas_iphone
+      state: not_home
+  action:
+  - service: vacuum.start
+    data: {}
+    target:
+      entity_id: vacuum.vacuum
+  - device_id: 49610d025fb7bbde0d30096f85a95d2f
+    domain: mobile_app
+    type: notify
+    message: Vacuum started
+    title: Vacuum started
   mode: single
