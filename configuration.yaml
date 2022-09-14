@@ -58,3 +58,5 @@ camera:
     draw: ["all"]
     attributes:
       - calibration_points
+
+smartir:

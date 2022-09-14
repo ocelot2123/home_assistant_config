@@ -1,20 +1,44 @@
 toggle_vacuum:
   alias: Toggle Vacuum on or off"
   sequence:
-    if:
-      - alias: If Vacuum is docked
-        condition: state
-        entity_id: vacuum.vacuum
-        state: docked
+  - if:
+    - alias: If Vacuum is docked
+      condition: state
+      entity_id: vacuum.vacuum
+      state: docked
     then:
-      - alias: Then start cleaning!
-        service: vacuum.start
-        data: {}
-        target:
-          entity_id: vacuum.vacuum
+    - alias: Then start cleaning!
+      service: vacuum.start
+      data: {}
+      target:
+        entity_id: vacuum.vacuum
     else:
-      - alias: Else return to dock
-        service: vacuum.return_to_base
-        data: {}
-        target:
-          entity_id: vacuum.vacuum
+    - alias: Else return to dock
+      service: vacuum.return_to_base
+      data: {}
+      target:
+        entity_id: vacuum.vacuum
+  mode: single
+  icon: mdi:robot-vacuum
+turn_on_office_ac:
+  alias: Turn on Office AC
+  sequence:
+  - service: remote.send_command
+    data:
+      device: office_ac
+      command: 'on'
+    target:
+      entity_id: remote.office_remote
+  mode: single
+  icon: mdi:air-filter
+turn_off_office_ac:
+  alias: Turn off Office AC
+  sequence:
+  - service: remote.send_command
+    data:
+      device: office_ac
+      command: 'off'
+    target:
+      entity_id: remote.office_remote
+  mode: single
+  icon: mdi:air-filter
