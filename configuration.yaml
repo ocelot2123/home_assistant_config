@@ -60,3 +60,12 @@ camera:
       - calibration_points
 
 smartir:
+
+counter:
+  clean_vacuum_dock_counter:
+    initial: 0
+    step: 1
+
+input_boolean:
+  vitamin_tracker:
+    name: Tracks daily vitamin

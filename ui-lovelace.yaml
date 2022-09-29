@@ -92,24 +92,6 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
-            entity: media_player.sony_bravia_tv
-            name: Tv
-            state_display: >
-              [[[
-                if (variables.state === 'playing') {
-                    return 'On';
-                }
-                if (variables.state === true) {
-                    return variables.translate_unknown;
-                }
-              ]]]
-            double_tap_action: !include popup/living_room_tv.yaml
-            template:
-              - base
-              - icon_tv
-              - loader
-
-          - type: custom:button-card
             entity: climate.living_room_ac
             name: AC
             double_tap_action: !include popup/living_room_ac.yaml
@@ -128,6 +110,24 @@ views:
                 ]]]
               circle_input_unit: "°C"
 
+          - type: custom:button-card
+            entity: media_player.sony_bravia_tv
+            name: Tv
+            state_display: >
+              [[[
+                if (variables.state === 'playing') {
+                    return 'On';
+                }
+                if (variables.state === true) {
+                    return variables.translate_unknown;
+                }
+              ]]]
+            double_tap_action: !include popup/living_room_tv.yaml
+            template:
+              - base
+              - icon_tv
+              - loader
+
       #################################################
       #                                               #
       #                  DINING ROOM                  #
@@ -140,6 +140,17 @@ views:
           grid-area: dining_room
         columns: 2
         cards:
+          - type: custom:button-card
+            entity: vacuum.vacuum
+            name: Vacuum
+            tap_action:
+              action: call-service
+              service: script.toggle_vacuum
+            template:
+              - base
+              - icon_vacuum
+              - loader
+
           - type: custom:button-card
             entity: climate.dining_room_ac
             name: AC
@@ -158,17 +169,6 @@ views:
                   }
                 ]]]
               circle_input_unit: "°C"
-
-          - type: custom:button-card
-            entity: vacuum.vacuum
-            name: Vacuum
-            tap_action:
-              action: call-service
-              service: script.toggle_vacuum
-            template:
-              - base
-              - icon_vacuum
-              - loader
 
           - type: custom:button-card
             entity: lock.front_door
