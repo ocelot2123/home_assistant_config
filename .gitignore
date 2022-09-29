@@ -6,6 +6,7 @@
 # $ git config --global mergetool.keepBackup false
 
 .*
+!/.github
 !.HA_VERSION
 backups
 blueprints
