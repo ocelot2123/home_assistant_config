@@ -123,8 +123,8 @@
   - device_id: 49610d025fb7bbde0d30096f85a95d2f
     domain: mobile_app
     type: notify
-    message: Take your vitamins!
-    title: Take your vitamins!
+    message: Turn on the water heater
+    title: Turn on the water heater
   mode: single
 - id: '1664443565606'
   alias: Vitamin Tracker
