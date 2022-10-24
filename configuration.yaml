@@ -62,7 +62,7 @@ camera:
 smartir:
 
 counter:
-  clean_vacuum_dock_counter:
+  vacuum_counter:
     initial: 0
     step: 1
 
