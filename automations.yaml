@@ -47,6 +47,9 @@
     - condition: state
       entity_id: device_tracker.lindas_iphone
       state: not_home
+    - condition: state
+      entity_id: input_boolean.no_vacuum
+      state: 'off'
   action:
   - service: vacuum.start
     data: {}
@@ -109,7 +112,7 @@
   - service: counter.reset
     data: {}
     target:
-      entity_id: counter.clean_vacuum_dock_counter
+      entity_id: counter.vacuum_counter
   mode: single
 - id: '1664443190969'
   alias: Water heater reminder daily
@@ -190,26 +193,12 @@
     data: {}
     target:
       entity_id: input_boolean.vitamin_tracker
-  - device_id: 52155b80fed6c9e296e5d2a8118c0499
-    domain: climate
-    entity_id: climate.dining_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-    alias: Turn off dining room AC
-  - device_id: 9830e6e77967529a266e9f3e8171c05e
-    domain: climate
-    entity_id: climate.living_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-    alias: Turn off living room AC
-  - type: turn_off
-    device_id: f0ee0cff2aaadfbdba0a2b9f0de1ae48
-    entity_id: remote.sony_kd_49x9000f
-    domain: remote
-    alias: Turn off living room TV
-  - service: script.turn_off_office_ac
+  - service: input_boolean.turn_off
     data: {}
-    alias: Turn off office AC
+    target:
+      entity_id: input_boolean.no_vacuum
+  - service: script.turn_off_electronics
+    data: {}
   mode: single
 - id: '1664444686046'
   alias: Tag Night stand Edward is scanned
@@ -219,26 +208,8 @@
     tag_id: 0b7294af-9601-4747-823b-a2f7cbcb1772
   condition: []
   action:
-  - device_id: 52155b80fed6c9e296e5d2a8118c0499
-    domain: climate
-    entity_id: climate.dining_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  - device_id: 9830e6e77967529a266e9f3e8171c05e
-    domain: climate
-    entity_id: climate.living_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  - type: turn_off
-    device_id: f0ee0cff2aaadfbdba0a2b9f0de1ae48
-    entity_id: remote.sony_kd_49x9000f
-    domain: remote
-  - service: remote.send_command
-    data:
-      device: office_ac
-      command: 'off'
-    target:
-      entity_id: remote.office_remote
+  - service: script.turn_off_electronics
+    data: {}
   mode: single
 - id: '1664444826301'
   alias: Tag Night stand Linda is scanned
@@ -248,26 +219,8 @@
     tag_id: 40149d82-b7bb-4e47-9e5e-938e8cbc873f
   condition: []
   action:
-  - device_id: 52155b80fed6c9e296e5d2a8118c0499
-    domain: climate
-    entity_id: climate.dining_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  - device_id: 9830e6e77967529a266e9f3e8171c05e
-    domain: climate
-    entity_id: climate.living_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  - type: turn_off
-    device_id: f0ee0cff2aaadfbdba0a2b9f0de1ae48
-    entity_id: remote.sony_kd_49x9000f
-    domain: remote
-  - service: remote.send_command
-    data:
-      device: office_ac
-      command: 'off'
-    target:
-      entity_id: remote.office_remote
+  - service: script.turn_off_electronics
+    data: {}
   mode: single
 - id: '1666616143798'
   alias: Leave home automation
@@ -292,24 +245,19 @@
       entity_id: device_tracker.lindas_iphone
       state: not_home
   action:
-  - device_id: 52155b80fed6c9e296e5d2a8118c0499
-    domain: climate
-    entity_id: climate.dining_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-    alias: Turn off dining room AC
-  - device_id: 9830e6e77967529a266e9f3e8171c05e
-    domain: climate
-    entity_id: climate.living_room_ac
-    type: set_hvac_mode
-    hvac_mode: 'off'
-    alias: Turn off living room AC
-  - service: script.turn_off_office_ac
+  - service: script.turn_off_electronics
     data: {}
-    alias: Turn off office AC
-  - type: turn_off
-    device_id: f0ee0cff2aaadfbdba0a2b9f0de1ae48
-    entity_id: remote.sony_kd_49x9000f
-    domain: remote
-    alias: Turn off living room TV
+  mode: single
+- id: '1667021463544'
+  alias: Tag No Vacuum is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: a26b9e68-1306-447d-af88-cb2b1a9b6669
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.no_vacuum
   mode: single

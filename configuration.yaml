@@ -69,3 +69,5 @@ counter:
 input_boolean:
   vitamin_tracker:
     name: Tracks daily vitamin
+  no_vacuum:
+    name: No Vacuum
