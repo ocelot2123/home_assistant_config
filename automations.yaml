@@ -173,9 +173,6 @@
     entity_id: device_tracker.edwards_pixel
     state: home
   action:
-  - service: script.tts_google_speakers
-    data:
-      message: Take your vitamins
   - device_id: 49610d025fb7bbde0d30096f85a95d2f
     domain: mobile_app
     type: notify

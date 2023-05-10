@@ -2,7 +2,7 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Dining Room AC
+    title: Living Room AC
     content:
       type: vertical-stack
       cards:
@@ -17,7 +17,7 @@ browser_mod:
           entities:
             - type: custom:mushroom-climate-card
               entity: climate.living_room_ac
-              name: Dining Room AC
+              name: Living Room AC
               icon: mdi:home-thermometer
               hvac_modes:
                 - "off"
