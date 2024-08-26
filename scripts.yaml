@@ -1,5 +1,5 @@
 toggle_vacuum:
-  alias: Toggle Vacuum on or off"
+  alias: Toggle Vacuum on or off
   sequence:
   - if:
     - alias: If Vacuum is docked
@@ -18,6 +18,10 @@ toggle_vacuum:
       data: {}
       target:
         entity_id: vacuum.vacuum
+  - service: counter.increment
+    data: {}
+    target:
+      entity_id: counter.vacuum_counter
   mode: single
   icon: mdi:robot-vacuum
 turn_on_office_ac:
@@ -58,10 +62,6 @@ tts_google_speakers:
 turn_off_electronics:
   alias: Turn off electronics
   sequence:
-  - type: turn_off
-    device_id: f0ee0cff2aaadfbdba0a2b9f0de1ae48
-    entity_id: remote.sony_kd_49x9000f
-    domain: remote
   - device_id: 52155b80fed6c9e296e5d2a8118c0499
     domain: climate
     entity_id: climate.dining_room_ac
@@ -74,11 +74,4 @@ turn_off_electronics:
     type: set_hvac_mode
     hvac_mode: 'off'
     alias: Turn off living room AC
-  - service: script.turn_off_office_ac
-    data: {}
-    alias: Turn off office AC
-  - type: turn_off
-    device_id: d1beebac471185455c7807e6e59ddc35
-    entity_id: switch.office_lights
-    domain: switch
   mode: single

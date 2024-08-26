@@ -1,0 +1,10 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Bedroom Curtain
+    content:
+      type: vertical-stack
+      cards:
+        - type: custom:more-info-card
+          entity: cover.bedroom_curtain

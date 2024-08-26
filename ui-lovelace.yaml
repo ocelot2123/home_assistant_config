@@ -12,7 +12,7 @@ views:
       grid-template-areas: |
         "sidebar  .           .       .       ."
         "sidebar  dining_room living_room  office ."
-        "sidebar  media       .       .       ."
+        "sidebar  bedroom       .       .       ."
         "sidebar  footer      footer  footer  ."
       mediaquery:
         #phone
@@ -24,7 +24,7 @@ views:
             ".  .           .        ."
             ".  sidebar     sidebar  ."
             ".  dining_room  living_room   ."
-            ".  office       media      ."
+            ".  office       bedroom      ."
             ".  footer      footer   ."
             ".  .           .        ."
         #portrait
@@ -35,7 +35,7 @@ views:
           grid-template-areas: |
             "sidebar  .           .       ."
             "sidebar  dining_room  living_room  ."
-            "sidebar  office      media    ."
+            "sidebar  office      bedroom    ."
             "sidebar  footer      footer  ."
             "sidebar  .           .       ."
     cards:
@@ -111,7 +111,7 @@ views:
               circle_input_unit: "°C"
 
           - type: custom:button-card
-            entity: media_player.sony_bravia_tv
+            entity: media_player.shield
             name: Tv
             state_display: >
               [[[
@@ -201,125 +201,24 @@ views:
 
       #################################################
       #                                               #
-      #                     MEDIA                     #
+      #                    Bedroom                    #
       #                                               #
       #################################################
 
       - type: grid
-        title: Media
+        title: Bedroom
         view_layout:
-          grid-area: media
-        columns: 1
+          grid-area: bedroom
+        columns: 2
         cards:
-          - type: custom:swipe-card
-            parameters:
-              speed: 550
-              spaceBetween: 40
-              threshold: 5
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state_not: Vardagsrum
-
-                      - entity: select.conditional_media
-                        state_not: Sovrum
-
-                      - entity: select.conditional_media
-                        state_not: Spotify
-
-                      - entity: select.conditional_media
-                        state_not: Kök
-                    card:
-                      type: custom:button-card
-                      entity: sensor.plex_recently_added
-                      name: Last Added
-                      tap_action:
-                        action: none
-                      template:
-                        - conditional_media
-                        - icon_plex
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Vardagsrum
-                    card:
-                      type: custom:button-card
-                      entity: media_player.vardagsrum
-                      triggers_update: sensor.youtube_watching
-                      template:
-                        - conditional_media
-                        - icon_apple_tv
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Sovrum
-                    card:
-                      type: custom:button-card
-                      entity: media_player.sovrum
-                      triggers_update: sensor.youtube_watching
-                      template:
-                        - conditional_media
-                        - icon_apple_tv
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Spotify
-                    card:
-                      type: custom:button-card
-                      entity: media_player.spotify
-                      template:
-                        - conditional_media
-                        - icon_spotify
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Kök
-                    card:
-                      type: custom:button-card
-                      entity: media_player.kok
-                      template:
-                        - conditional_media
-                        - icon_nest_mini
-
-              - type: grid
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    entity: media_player.vardagsrum
-                    triggers_update: sensor.youtube_watching
-                    name: Vardagsrum
-                    template:
-                      - media
-                      - icon_apple_tv
-
-                  - type: custom:button-card
-                    entity: media_player.sovrum
-                    triggers_update: sensor.youtube_watching
-                    name: Sovrum
-                    template:
-                      - media
-                      - icon_apple_tv
-
-                  - type: custom:button-card
-                    entity: media_player.spotify
-                    name: Spotify
-                    template:
-                      - media
-                      - icon_spotify
-
-                  - type: custom:button-card
-                    entity: media_player.kok
-                    name: Nest Mini
-                    template:
-                      - media
-                      - icon_nest_mini
+          - type: custom:button-card
+            entity: cover.bedroom_curtain
+            name: Curtain
+            double_tap_action: !include popup/bedroom_curtain.yaml
+            template:
+              - base
+              - icon_curtain
+              - loader
 
       #################################################
       #                                               #
