@@ -214,6 +214,7 @@ views:
           - type: custom:button-card
             entity: cover.bedroom_curtain
             name: Curtain
+            tap_action: !include popup/bedroom_curtain.yaml
             double_tap_action: !include popup/bedroom_curtain.yaml
             template:
               - base

@@ -72,7 +72,4 @@ input_boolean:
   no_vacuum:
     name: No Vacuum
 
-homeassistant:
-  customize: !include customize.yaml
-
 bluetooth:

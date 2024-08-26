@@ -1,275 +1,314 @@
-- id: '1662537236129'
+- id: "1662537236129"
   alias: Front door unlocked notification
   description: Sends phone notification if the front door is unlocked for too long
   trigger:
-  - platform: state
-    entity_id:
-    - lock.front_door
-    to: unlocked
-    for:
-      hours: 0
-      minutes: 2
-      seconds: 0
+    - platform: state
+      entity_id:
+        - lock.front_door
+      to: unlocked
+      for:
+        hours: 0
+        minutes: 2
+        seconds: 0
   condition: []
   action:
-  - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
-    domain: mobile_app
-    type: notify
-    message: Front door is unlocked!
-  - device_id: da2a54d25f82a71b18bd36465060d5f3
-    domain: mobile_app
-    type: notify
-    message: Front door is unlocked!
+    - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
+      domain: mobile_app
+      type: notify
+      message: Front door is unlocked!
+    - device_id: da2a54d25f82a71b18bd36465060d5f3
+      domain: mobile_app
+      type: notify
+      message: Front door is unlocked!
   mode: single
-- id: '1662546484568'
+- id: "1662546484568"
   alias: Start vacuum when no one is home
-  description: Starts vacuum if both Edward and Linda are not home and only if vacuum
+  description:
+    Starts vacuum if both Edward and Linda are not home and only if vacuum
     has not been run today already
   trigger:
-  - platform: state
-    entity_id:
-    - person.edward
-    to: not_home
-  - platform: state
-    entity_id:
-    - person.linda
-    to: not_home
+    - platform: state
+      entity_id:
+        - person.edward
+      to: not_home
+    - platform: state
+      entity_id:
+        - person.linda
+      to: not_home
   condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: person.edward
-      state: not_home
-    - condition: state
-      entity_id: person.linda
-      state: not_home
-    - condition: state
-      entity_id: input_boolean.no_vacuum
-      state: 'off'
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: person.edward
+          state: not_home
+        - condition: state
+          entity_id: person.linda
+          state: not_home
+        - condition: state
+          entity_id: input_boolean.no_vacuum
+          state: "off"
   action:
-  - data: {}
-    target:
-      entity_id: vacuum.vacuum
-    action: vacuum.start
-  - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
-    domain: mobile_app
-    type: notify
-    message: Vacuum started
-    title: Vacuum started
-  - data: {}
-    target:
-      entity_id: counter.vacuum_counter
-    action: counter.increment
-  - data: {}
-    target:
-      entity_id: input_boolean.no_vacuum
-    action: input_boolean.turn_on
+    - data: {}
+      target:
+        entity_id: vacuum.vacuum
+      action: vacuum.start
+    - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
+      domain: mobile_app
+      type: notify
+      message: Vacuum started
+      title: Vacuum started
+    - data: {}
+      target:
+        entity_id: counter.vacuum_counter
+      action: counter.increment
+    - data: {}
+      target:
+        entity_id: input_boolean.no_vacuum
+      action: input_boolean.turn_on
   mode: single
-- id: '1663596447311'
+- id: "1663596447311"
   alias: Clean robot dock reminder daily
-  description: If either Edward or Linda is home and the dock has not been cleaned
+  description:
+    If either Edward or Linda is home and the dock has not been cleaned
     for more than 3 days then send a reminder to clean dock
   trigger:
-  - platform: time
-    at: '20:30:00'
+    - platform: time
+      at: "20:30:00"
   condition:
-  - condition: and
-    conditions:
-    - condition: numeric_state
-      entity_id: counter.vacuum_counter
-      above: 1
+    - condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: counter.vacuum_counter
+          above: 1
   action:
-  - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
-    domain: mobile_app
-    type: notify
-    message: Time to clean the vacuum dock
-    title: Scan the NFC tag after it is cleaned
-  - device_id: da2a54d25f82a71b18bd36465060d5f3
-    domain: mobile_app
-    type: notify
-    message: Time to clean the vacuum dock
-    title: Scan the NFC tag after it is cleaned
-  - data:
-      message: Clean the vacuum!
-    action: script.tts_google_speakers
+    - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
+      domain: mobile_app
+      type: notify
+      message: Time to clean the vacuum dock
+      title: Scan the NFC tag after it is cleaned
+    - device_id: da2a54d25f82a71b18bd36465060d5f3
+      domain: mobile_app
+      type: notify
+      message: Time to clean the vacuum dock
+      title: Scan the NFC tag after it is cleaned
+    - data:
+        message: Clean the vacuum!
+      action: script.tts_google_speakers
   mode: single
-- id: '1664443046441'
+- id: "1664443046441"
   alias: Vacuum dock tag scanned
   description: Resets vacuum counter when tag is scanned
   trigger:
-  - platform: tag
-    tag_id: 3016833c-7067-47f5-8551-c1498159b3fe
+    - platform: tag
+      tag_id: 3016833c-7067-47f5-8551-c1498159b3fe
   condition: []
   action:
-  - service: counter.reset
-    data: {}
-    target:
-      entity_id: counter.vacuum_counter
+    - service: counter.reset
+      data: {}
+      target:
+        entity_id: counter.vacuum_counter
   mode: single
-- id: '1664443190969'
+- id: "1664443190969"
   alias: Water heater reminder daily
-  description: ''
+  description: ""
   trigger:
-  - platform: time
-    at: '21:30:00'
+    - platform: time
+      at: "21:30:00"
   condition: []
   action:
-  - service: script.tts_google_speakers
-    data:
-      message: Turn on the water heater
-  - device_id: 49610d025fb7bbde0d30096f85a95d2f
-    domain: mobile_app
-    type: notify
-    message: Turn on the water heater
-    title: Turn on the water heater
-  mode: single
-- id: '1664443565606'
-  alias: Vitamin Tracker
-  description: ''
-  trigger:
-  - platform: tag
-    tag_id: af9c3c26-3f73-45cc-b08d-22862960c7ba
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.vitamin_tracker
-        state: 'off'
-      sequence:
-      - service: tts.cloud_say
-        data:
-          entity_id: media_player.office_speaker
-          message: Yes, take your vitamin
-      - service: input_boolean.turn_on
-        data: {}
-        target:
-          entity_id: input_boolean.vitamin_tracker
-    default:
-    - service: tts.cloud_say
+    - service: script.tts_google_speakers
       data:
-        entity_id: media_player.office_speaker
-        message: STOP! You have already had your vitamins for the day.
+        message: Turn on the water heater
+    - device_id: 49610d025fb7bbde0d30096f85a95d2f
+      domain: mobile_app
+      type: notify
+      message: Turn on the water heater
+      title: Turn on the water heater
   mode: single
-- id: '1664443685941'
+- id: "1664443565606"
+  alias: Vitamin Tracker
+  description: ""
+  trigger:
+    - platform: tag
+      tag_id: af9c3c26-3f73-45cc-b08d-22862960c7ba
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.vitamin_tracker
+              state: "off"
+          sequence:
+            - service: tts.cloud_say
+              data:
+                entity_id: media_player.office_speaker
+                message: Yes, take your vitamin
+            - service: input_boolean.turn_on
+              data: {}
+              target:
+                entity_id: input_boolean.vitamin_tracker
+      default:
+        - service: tts.cloud_say
+          data:
+            entity_id: media_player.office_speaker
+            message: STOP! You have already had your vitamins for the day.
+  mode: single
+- id: "1664443685941"
   alias: Vitamin reminder daily
-  description: ''
+  description: ""
   trigger:
-  - platform: time
-    at: '15:00:00'
+    - platform: time
+      at: "15:00:00"
   condition:
-  - condition: state
-    entity_id: input_boolean.vitamin_tracker
-    state: 'off'
-  - condition: state
-    entity_id: device_tracker.edwards_pixel
-    state: home
-  action:
-  - device_id: 49610d025fb7bbde0d30096f85a95d2f
-    domain: mobile_app
-    type: notify
-    message: Take your vitamins
-  mode: single
-- id: '1664443767385'
-  alias: Daily stuff
-  description: ''
-  trigger:
-  - platform: time
-    at: 04:00:00
-  condition: []
-  action:
-  - service: input_boolean.turn_off
-    data: {}
-    target:
+    - condition: state
       entity_id: input_boolean.vitamin_tracker
-  - service: input_boolean.turn_off
-    data: {}
-    target:
-      entity_id: input_boolean.no_vacuum
-  - service: script.turn_off_electronics
-    data: {}
+      state: "off"
+    - condition: state
+      entity_id: device_tracker.edwards_pixel
+      state: home
+  action:
+    - device_id: 49610d025fb7bbde0d30096f85a95d2f
+      domain: mobile_app
+      type: notify
+      message: Take your vitamins
   mode: single
-- id: '1664444686046'
+- id: "1664443767385"
+  alias: Daily stuff
+  description: ""
+  trigger:
+    - platform: time
+      at: 04:00:00
+  condition: []
+  action:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.vitamin_tracker
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.no_vacuum
+    - service: script.turn_off_electronics
+      data: {}
+  mode: single
+- id: "1664444686046"
   alias: Tag Night stand Edward is scanned
-  description: ''
+  description: ""
   trigger:
-  - platform: tag
-    tag_id: 0b7294af-9601-4747-823b-a2f7cbcb1772
+    - platform: tag
+      tag_id: 0b7294af-9601-4747-823b-a2f7cbcb1772
   condition: []
   action:
-  - service: script.turn_off_electronics
-    data: {}
+    - service: script.turn_off_electronics
+      data: {}
   mode: single
-- id: '1664444826301'
+- id: "1664444826301"
   alias: Tag Night stand Linda is scanned
-  description: ''
+  description: ""
   trigger:
-  - platform: tag
-    tag_id: 40149d82-b7bb-4e47-9e5e-938e8cbc873f
+    - platform: tag
+      tag_id: 40149d82-b7bb-4e47-9e5e-938e8cbc873f
   condition: []
   action:
-  - service: script.turn_off_electronics
-    data: {}
+    - service: script.turn_off_electronics
+      data: {}
   mode: single
-- id: '1666616143798'
+- id: "1666616143798"
   alias: Leave home automation
-  description: Turns off everything when both Linda and Edward's phones are disconnected
+  description:
+    Turns off everything when both Linda and Edward's phones are disconnected
     from wifi
   trigger:
-  - platform: state
-    entity_id:
-    - person.edward
-    to: not_home
-  - platform: state
-    entity_id:
-    - person.linda
-    to: not_home
+    - platform: state
+      entity_id:
+        - person.edward
+      to: not_home
+    - platform: state
+      entity_id:
+        - person.linda
+      to: not_home
   condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: person.edward
-      state: not_home
-    - condition: state
-      entity_id: person.linda
-      state: not_home
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: person.edward
+          state: not_home
+        - condition: state
+          entity_id: person.linda
+          state: not_home
   action:
-  - service: script.turn_off_electronics
-    data: {}
+    - service: script.turn_off_electronics
+      data: {}
   mode: single
-- id: '1667021463544'
+- id: "1667021463544"
   alias: Tag No Vacuum is scanned
-  description: ''
+  description: ""
   trigger:
-  - platform: tag
-    tag_id: a26b9e68-1306-447d-af88-cb2b1a9b6669
+    - platform: tag
+      tag_id: a26b9e68-1306-447d-af88-cb2b1a9b6669
   condition: []
   action:
-  - service: input_boolean.turn_on
-    data: {}
-    target:
-      entity_id: input_boolean.no_vacuum
+    - service: input_boolean.turn_on
+      data: {}
+      target:
+        entity_id: input_boolean.no_vacuum
   mode: single
-- id: '1703051972841'
+- id: "1703051972841"
   alias: Notify Edward when 3D Print is done
-  description: ''
+  description: ""
   trigger:
-  - platform: state
-    entity_id:
-    - sensor.prusalink
-    from: printing
-    to: finished
-    for:
-      hours: 0
-      minutes: 10
-      seconds: 0
+    - platform: state
+      entity_id:
+        - sensor.prusalink
+      from: printing
+      to: finished
+      for:
+        hours: 0
+        minutes: 10
+        seconds: 0
   condition:
-  - condition: state
-    entity_id: person.edward
-    state: home
+    - condition: state
+      entity_id: person.edward
+      state: home
   action:
-  - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
-    domain: mobile_app
-    type: notify
-    message: Print finished
+    - device_id: 6a6717a9c36c07395217a7cb0d10c5b2
+      domain: mobile_app
+      type: notify
+      message: Print finished
+  mode: single
+- id: "1724676638127"
+  alias: "Curtain: Open to 75% in the morning"
+  description: ""
+  trigger:
+    - platform: time
+      at: 07:30:00
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - action: cover.set_cover_position
+      target:
+        entity_id:
+          - cover.bedroom_curtain
+      data:
+        position: 75
+  mode: single
+- id: "1724676697629"
+  alias: "Curtain: Close at night"
+  description: ""
+  trigger:
+    - platform: time
+      at: "22:00:00"
+  condition: []
+  action:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id: cover.bedroom_curtain
   mode: single
