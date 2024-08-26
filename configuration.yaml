@@ -72,11 +72,6 @@ input_boolean:
   no_vacuum:
     name: No Vacuum
 
-opnsense:
-  url: http://192.168.50.1/api
-  api_secret: !secret api_secret
-  api_key: !secret api_key
-
 homeassistant:
   customize: !include customize.yaml
 
